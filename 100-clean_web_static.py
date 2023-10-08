@@ -1,23 +1,24 @@
 #!/usr/bin/python3
+
 """
-Deletes out-of-date archives
-fab -f 100-clean_web_static.py do_clean:number=2
-    -i ssh-key -u ubuntu > /dev/null 2>&1
+Fabric script to delete out-of-date archives.
+The do_clean() function deletes old archives while keeping a specified number of recent archives.
+It deletes local archives from the 'versions' folder, keeping the most recent.
+It deletes remote archives from the '/data/web_static/releases' folder on the web servers, keeping the most recent.
+The number argument specifies how many archives to keep. If 0 or 1, it keeps the most recent archive. If 2, it keeps the most recent and second most recent, etc.
 """
 
 import os
 from fabric.api import *
 
-env.hosts = ['52.87.155.66', '54.89.109.87']
+env.hosts = ['100.27.13.221', '54.210.79.93']
 
 
 def do_clean(number=0):
     """Delete out-of-date archives.
+
     Args:
         number (int): The number of archives to keep.
-    If number is 0 or 1, keeps only the most recent archive. If
-    number is 2, keeps the most and second-most recent archives,
-    etc.
     """
     number = 1 if int(number) == 0 else int(number)
 
